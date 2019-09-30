@@ -21,9 +21,9 @@ public class TomcatConfig implements WebServerFactoryCustomizer<TomcatServletWeb
 	 */
 	@Override
 	public void customize(TomcatServletWebServerFactory factory) {
-		System.out.println("进入定制工厂");
 		factory.setPort(8085);
-	/*	factory.setUriEncoding(Charset.forName("UTF8"));*/
+		factory.setUriEncoding(Charset.defaultCharset());
+
 	}
 
 	/**
@@ -34,12 +34,10 @@ public class TomcatConfig implements WebServerFactoryCustomizer<TomcatServletWeb
 	public ServletWebServerFactory servletContainer() {
 		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
 		tomcat.addAdditionalTomcatConnectors(createSslConnector());
-		System.out.println("进入容器");
 		return tomcat;
 	}
 
 	private Connector createSslConnector() {
-		System.out.println("创建连接");
 		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
 		Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
 		//try {
